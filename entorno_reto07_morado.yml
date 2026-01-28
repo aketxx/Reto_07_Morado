@@ -120,3 +120,5 @@ dependencies:
   - zstd=1.5.7=h56299aa_0
   - plotly
   - openpyxl
+  - nbformat>=4.2.0
+  - python-kaleido
