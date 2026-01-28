@@ -119,3 +119,4 @@ dependencies:
   - zstd=1.5.7=h56299aa_0
   - zstd=1.5.7=h56299aa_0
   - plotly
+  - openpyxl
