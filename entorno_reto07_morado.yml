@@ -122,4 +122,4 @@ dependencies:
   - openpyxl
   - nbformat>=4.2.0
   - python-kaleido
-  - sklearn
+  - scikit-learn
