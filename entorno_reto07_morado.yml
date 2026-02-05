@@ -126,4 +126,4 @@ dependencies:
   - zstd=1.5.7=h56299aa_0
   - plotly
   - xgboost
- - lightgbm
+  - lightgbm
