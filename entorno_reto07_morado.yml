@@ -127,3 +127,4 @@ dependencies:
   - plotly
   - xgboost
   - lightgbm
+  - imbalanced-learn
