@@ -129,3 +129,4 @@ dependencies:
   - lightgbm
   - imbalanced-learn
   - time
+  - kneed
