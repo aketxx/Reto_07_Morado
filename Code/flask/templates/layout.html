@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Sistema Créditos{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+
+</head>
+
+<body>
+
+<header>
+<h1>Sistema de Evaluación de Créditos</h1>
+
+<nav>
+<a href="/">Inicio</a> |
+<a href="/registro">Registro</a> |
+<a href="/consulta">Consultar</a> |
+<a href="/creditos">Créditos</a>
+</nav>
+
+<hr>
+</header>
+
+<main>
+{% block content %}
+{% endblock %}
+</main>
+
+<footer>
+<hr>
+<small>Proyecto Flask Equipo Morado</small>
+</footer>
+
+</body>
+</html>
+
