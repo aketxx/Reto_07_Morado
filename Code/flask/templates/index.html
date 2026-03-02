@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Consulta de Crédito{% endblock %}
+
+{% block content %}
+
+<h2>Buscar crédito</h2>
+
+<form method="POST">
+
+    <label>ID Crédito</label>
+    <input name="credit_id" required>
+
+    <label>Edad mínima</label>
+    <input name="edad" type="number">
+
+    <label>Ingreso mínimo</label>
+    <input name="ingreso" type="number">
+
+    <label>Nivel de estudios</label>
+    <input name="estudios">
+
+    <label>Tipo amortización</label>
+    <select name="amortizacion">
+        <option value="frances">Francesa</option>
+        <option value="alemana">Alemana</option>
+    </select>
+
+    <button type="submit">Consultar</button>
+
+</form>
+
+{% endblock %}
