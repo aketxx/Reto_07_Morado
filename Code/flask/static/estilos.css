@@ -1,0 +1,125 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body */
+body {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    background-color: #876784; /* Morado_Os */
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+header h1 {
+    margin-bottom: 10px;
+}
+
+/* Nav */
+nav a {
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: bold;
+    color: #cdfc7d; /* Verde_Claro */
+}
+
+nav a:hover {
+    color: #74b404; /* Verde_Fuerte */
+}
+
+/* Main Content */
+main {
+    margin-top: 20px;
+}
+
+/* Cards */
+.card {
+    background-color: #b09eae; /* Morado_Cl */
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    color: #ffffff;
+}
+
+/* Formularios */
+form {
+    background-color: #cdfc7d; /* Verde_Claro */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+form input, form select, form button {
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #000000;
+}
+
+form button {
+    background-color: #74b404; /* Verde_Fuerte */
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+form button:hover {
+    background-color: #aa044c; /* Rojo_Corp */
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #000000;
+}
+
+th {
+    background-color: #876784; /* Morado_Os */
+    color: #ffffff;
+    padding: 10px;
+}
+
+td {
+    text-align: center;
+    padding: 8px;
+    background-color: #b09eae; /* Morado_Cl */
+    color: #ffffff;
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #000000;
+}
+
+/* Mensajes de error o alertas */
+.error-msg {
+    color: #aa044c; /* Rojo_Corp */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.success-msg {
+    color: #74b404; /* Verde_Fuerte */
+    font-weight: bold;
+    margin-top: 10px;
+}
