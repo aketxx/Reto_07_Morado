@@ -127,3 +127,6 @@ dependencies:
   - plotly
   - xgboost
   - lightgbm
+  - imbalanced-learn
+  - time
+  - kneed
