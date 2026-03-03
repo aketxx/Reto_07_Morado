@@ -122,4 +122,15 @@ dependencies:
   - openpyxl
   - nbformat>=4.2.0
   - python-kaleido
+<<<<<<< HEAD
   - imbalanced-learn
+=======
+  - scikit-learn
+  - zstd=1.5.7=h56299aa_0
+  - plotly
+  - xgboost
+  - lightgbm
+  - imbalanced-learn
+  - time
+  - kneed
+>>>>>>> 34e4bb33b7444c09752ee8e74cdaa2cb4b18e19f
