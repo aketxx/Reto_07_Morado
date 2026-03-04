@@ -1,35 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>{% block title %}Sistema Créditos{% endblock %}</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
-
+    <title>{% block title %}Riesgo Crediticio{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
 </head>
-
 <body>
 
-<header>
-<h1>Sistema de Evaluación de Créditos</h1>
-
-<nav>
-<a href="/">Inicio</a> |
-<a href="/registro">Registro</a> |
-<a href="/consulta">Consultar</a> |
-<a href="/creditos">Créditos</a>
-</nav>
-
-<hr>
+<header class="header">
+    <h1>Modelo Predictivo de Riesgo Crediticio de la Vivienda</h1>
 </header>
-
-<main>
-{% block content %}
-{% endblock %}
-</main>
+<nav>
+    <a href="{{ url_for('portada') }}">Inicio</a>
+    <a href="{{ url_for('evaluacion') }}">Evaluación</a>
+    <a href="{{ url_for('historico') }}">Histórico</a>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+</nav>
+<div class="main-container">
+    {% block content %}
+    {% endblock %}
+</div>
 
 <footer>
-<hr>
-<small>Proyecto Flask Equipo Morado</small>
+    Reto 07 - Mondragon Unibertsitatea
 </footer>
 
 </body>

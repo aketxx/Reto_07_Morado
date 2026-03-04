@@ -1,34 +1,17 @@
 {% extends "layout.html" %}
+{% block title %}Resultado{% endblock %}
 
 {% block content %}
 
-<h2>Resultado</h2>
+<div class="card-resultado {{clase_css}}">
+    <h2>Resultado del Análisis</h2>
+    <p class="probabilidad">{{probabilidad}} %</p>
+    <p class="nivel">{{nivel}}</p>
+</div>
 
-<table border="1">
-<tr>
-<th>ID</th>
-<th>Edad</th>
-<th>Ingreso</th>
-<th>Estudios</th>
-<th>Monto</th>
-</tr>
-
-{% for c in creditos %}
-<tr>
-<td>{{ c[0] }}</td>
-<td>{{ c[1] }}</td>
-<td>{{ c[2] }}</td>
-<td>{{ c[3] }}</td>
-<td>{{ c[4] }}</td>
-</tr>
-{% endfor %}
-</table>
-
-<h3>Cuotas</h3>
-
-<pre>{{ cuotas }}</pre>
-
-<a href="/consulta">Nueva consulta</a>
+<div class="acciones">
+    <a href="{{ url_for('evaluacion') }}" class="btn-secundario">Nueva Evaluación</a>
+    <a href="{{ url_for('historico') }}" class="btn-secundario">Ver Histórico</a>
+</div>
 
 {% endblock %}
-

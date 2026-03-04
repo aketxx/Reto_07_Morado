@@ -1,112 +1,152 @@
-from flask import Flask, render_template, request, jsonify
-from bbdd import con_sql
+from flask import Flask, render_template, request, redirect, url_for
+import pandas as pd
+import joblib
+import os
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from bbdd.con_sql import insertar_prediccion, obtener_historico, obtener_usuario, crear_usuario
+from analytics.metrics import obtener_metricas
+import sqlite3
 
 app = Flask(__name__)
+app.secret_key = "reto07_secret"
 
-con_sql.crear_tablas()
+# ================= LOGIN =================
 
-def francesa(monto, tasa=0.1, n=12):
-    return round(monto * (tasa / (1 - (1+tasa)**-n)), 2)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "auth"
 
+class Usuario(UserMixin):
+    def __init__(self, id, username):
+        self.id = id
+        self.username = username
 
-def alemana(monto, tasa=0.1, n=12):
-    capital = monto / n
-    return [round(capital + monto*tasa,2) for _ in range(n)]
+def obtener_usuario_por_id(user_id):
+    from bbdd.con_sql import DB_PATH
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM usuarios WHERE id = ?", (user_id,))
+    user = cursor.fetchone()
+    conn.close()
+    return user
+
+@login_manager.user_loader
+def load_user(user_id):
+    user = obtener_usuario_por_id(user_id)
+    if user:
+        return Usuario(user[0], user[1])
+    return None
+
+# ================= MODELO =================
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+modelo = joblib.load(os.path.join(BASE_DIR, "modelo", "modelo_ganador.pkl"))
+threshold = joblib.load(os.path.join(BASE_DIR, "modelo", "threshold.pkl"))
+
+def preparar_input(data_dict):
+    df = pd.DataFrame([data_dict])
+    df = pd.get_dummies(df)
+    df = df.reindex(columns=modelo.feature_names_in_, fill_value=0)
+    df = df.astype("float32")
+    return df
+
+# ================= RUTAS =================
 
 @app.route("/")
-def home():
-    return render_template("home.html")
+def portada():
+    return render_template("portada.html")
 
+# 🔹 Ruta combinada Login / Registro
+# ================= AUTENTICACIÓN =================
 
-@app.route("/registro", methods=["GET","POST"])
-def registro():
+@app.route("/auth")
+def auth():
+    return render_template("auth.html")
 
-    if request.method == "GET":
-        return render_template("registro.html")
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
 
-    nombre = request.form["nombre"]
-    email = request.form["email"]
-    pw = request.form["pw"]
+        user = obtener_usuario(username)
 
-    if con_sql.usuario_existe(email):
-        return render_template("registrado.html",
-            msg=f"{email} ya estaba registrado")
+        if user and user[2] == password:
+            usuario = Usuario(user[0], user[1])
+            login_user(usuario)
+            return redirect(url_for("evaluacion"))
 
-    con_sql.insertar_usuario(nombre,email,pw)
+    return render_template("login.html")
 
-    return render_template("registrado.html",
-        msg=f"Usuario {email} registrado correctamente")
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
 
-@app.route("/result", methods=["POST"])
-def result():
+        creado = crear_usuario(username, password)
 
-    nombre = request.form.get("nombre")
-    correo = request.form.get("email")
-    pw = request.form.get("pw")
-    ciudad = request.form.get("ciudad")
-    estudios = request.form.get("estudios")
+        if creado:
+            return redirect(url_for("login"))
 
-    if con_sql.usuario_existe(correo):
-        return render_template(
-            "registrado.html",
-            msg=f"El usuario {correo} ya estaba registrado"
-        )
+    return render_template("register.html")
 
-    con_sql.insertar_usuario(nombre, correo, pw)
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("portada"))
 
-    return render_template(
-        "registrado.html",
-        msg=f"""
-Usuario registrado correctamente:
-Nombre: {nombre}
-Ciudad: {ciudad}
-Estudios: {estudios}
-"""
-    )
+@app.route("/evaluacion")
+@login_required
+def evaluacion():
+    return render_template("evaluacion.html")
 
+@app.route("/evaluar", methods=["POST"])
+@login_required
+def evaluar():
+    datos = {
+        "Edad": float(request.form["edad"]),
+        "Ingreso": float(request.form["ingreso"]),
+        "Nivel_Estudios": request.form["estudios"],
+        "Estado_Civil": request.form["estado_civil"],
+        "Num_Creditos": float(request.form["num_creditos"]),
+        "Tipo_Amortizacion": request.form["tipo_amortizacion"]
+    }
 
-@app.route("/consulta")
-def consulta():
-    return render_template("consulta.html")
+    X = preparar_input(datos)
+    proba = modelo.predict_proba(X)[:, 1][0]
 
+    if proba < 0.30:
+        nivel = "BAJO RIESGO"
+        clase_css = "verde_fuerte"
+    elif proba < 0.60:
+        nivel = "RIESGO MEDIO"
+        clase_css = "morado"
+    else:
+        nivel = "ALTO RIESGO"
+        clase_css = "rojo"
 
-@app.route("/resultado", methods=["POST"])
-def resultado():
-
-    edad = request.form.get("edad", type=int)
-    ingreso = request.form.get("ingreso", type=float)
-    estudios = request.form.get("estudios")
-    amort = request.form.get("amortizacion")
-
-    creditos = con_sql.filtrar_creditos(edad, ingreso, estudios)
-
-    if not creditos:
-        return render_template("error.html", mensaje="Sin resultados")
-
-    monto = creditos[0][4]
-
-    cuotas = alemana(monto) if amort=="alemana" else francesa(monto)
+    insertar_prediccion(datos, proba, nivel)
 
     return render_template(
         "resultado.html",
-        creditos=creditos,
-        cuotas=cuotas
+        probabilidad=round(proba * 100, 2),
+        nivel=nivel,
+        clase_css=clase_css
     )
 
+@app.route("/historico")
+@login_required
+def historico():
+    datos = obtener_historico()
+    return render_template("historico.html", datos=datos)
 
-@app.route("/creditos")
-def creditos():
-
-    data = con_sql.obtener_creditos()
-
-    return render_template("creditos.html", creditos=data)
-
-
-@app.route("/api/creditos")
-def api():
-
-    return jsonify(con_sql.obtener_creditos())
-
+@app.route("/dashboard")
+@login_required
+def dashboard():
+    datos = obtener_metricas()
+    return render_template("dashboard.html", datos=datos)
 
 if __name__ == "__main__":
     app.run(debug=True)

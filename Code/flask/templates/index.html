@@ -1,33 +1,65 @@
 {% extends "layout.html" %}
-
-{% block title %}Consulta de Crédito{% endblock %}
+{% block title %}Evaluación{% endblock %}
 
 {% block content %}
 
-<h2>Buscar crédito</h2>
+<div class="card-form">
 
-<form method="POST">
+    <h2>Evaluación Individual de Crédito</h2>
 
-    <label>ID Crédito</label>
-    <input name="credit_id" required>
+    <form action="/evaluar" method="post">
 
-    <label>Edad mínima</label>
-    <input name="edad" type="number">
+        <div class="form-grid">
 
-    <label>Ingreso mínimo</label>
-    <input name="ingreso" type="number">
+            <div>
+                <label>Edad</label>
+                <input type="number" name="edad" required>
+            </div>
 
-    <label>Nivel de estudios</label>
-    <input name="estudios">
+            <div>
+                <label>Ingreso</label>
+                <input type="number" name="ingreso" required>
+            </div>
 
-    <label>Tipo amortización</label>
-    <select name="amortizacion">
-        <option value="frances">Francesa</option>
-        <option value="alemana">Alemana</option>
-    </select>
+            <div>
+                <label>Nivel de Estudios</label>
+                <select name="estudios">
+                    <option>Secundaria</option>
+                    <option>Bachiller</option>
+                    <option>Universitario</option>
+                    <option>Postgrado</option>
+                </select>
+            </div>
 
-    <button type="submit">Consultar</button>
+            <div>
+                <label>Estado Civil</label>
+                <select name="estado_civil">
+                    <option>Soltero</option>
+                    <option>Casado</option>
+                </select>
+            </div>
 
-</form>
+            <div>
+                <label>Número de Créditos</label>
+                <input type="number" name="num_creditos" required>
+            </div>
+
+            <div>
+                <label>Tipo de Amortización</label>
+                <select name="tipo_amortizacion">
+                    <option>Frances</option>
+                    <option>Alemana</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button class="btn-principal" type="submit">
+            Evaluar Riesgo
+        </button>
+
+    </form>
+
+</div>
 
 {% endblock %}
