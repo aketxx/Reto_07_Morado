@@ -1,3 +1,7 @@
+import os
+import pandas as pd
+import sys
+
 def cargar_librerias_proyecto():
     """
     Importa todas las librerías necesarias para el proyecto
