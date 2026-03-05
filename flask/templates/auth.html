@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}Autenticación{% endblock %}
+
+{% block content %}
+
+<div class="auth-selector">
+
+    <h2>Acceso a la Aplicación</h2>
+
+    <div class="auth-buttons">
+        <a href="{{ url_for('login') }}" class="btn-auth">
+            Iniciar Sesión
+        </a>
+
+        <a href="{{ url_for('register') }}" class="btn-auth secondary">
+            Registrarse
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Riesgo Crediticio{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+
+<header class="header">
+    <h1>Modelo Predictivo de Riesgo Crediticio de la Vivienda</h1>
+</header>
+
+<nav>
+    <a href="{{ url_for('portada') }}">Inicio</a>
+    <a href="{{ url_for('evaluacion') }}">Evaluación</a>
+    <a href="{{ url_for('amortizacion') }}">Amortización</a>
+    <a href="{{ url_for('historico') }}">Historial</a>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+</nav>
+
+<div class="main-container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<footer>
+    Reto 07 - Equipo Morado
+</footer>
+
+</body>
+</html>
