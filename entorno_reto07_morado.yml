@@ -75,7 +75,6 @@ dependencies:
   - pixman=0.46.4=h4043f72_0
   - platformdirs=4.5.0=py312haa95532_0
   - prompt-toolkit=3.0.52=py312haa95532_1
-  - prompt_toolkit=3.0.52=hd3eb1b0_1
   - psutil=7.0.0=py312h02ab6af_1
   - pure_eval=0.2.3=py312haa95532_0
   - pygments=2.19.2=py312haa95532_0
@@ -117,17 +116,16 @@ dependencies:
   - zeromq=4.3.5=h6c54ac7_1
   - zlib=1.3.1=h02ab6af_0
   - zstd=1.5.7=h56299aa_0
-  - zstd=1.5.7=h56299aa_0
   - plotly
   - openpyxl
   - nbformat>=4.2.0
   - python-kaleido
   - scikit-learn
-  - zstd=1.5.7=h56299aa_0
-  - plotly
   - xgboost
   - lightgbm
   - imbalanced-learn
-  - time
   - kneed
-  - imblearn
+  - flask
+  - flask-login
+  - joblib
+  - gunicorn

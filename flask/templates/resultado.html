@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block title %}Resultado{% endblock %}
+
+{% block content %}
+
+<div class="card-resultado {{clase_css}}">
+    <h2>Resultado del Análisis</h2>
+    <p class="probabilidad">{{probabilidad}} %</p>
+    <p class="nivel">{{nivel}}</p>
+</div>
+
+<div class="acciones">
+    <a href="{{ url_for('evaluacion') }}" class="btn-secundario">Nueva Evaluación</a>
+    <a href="{{ url_for('historico') }}" class="btn-secundario">Ver Histórico</a>
+</div>
+
+{% endblock %}

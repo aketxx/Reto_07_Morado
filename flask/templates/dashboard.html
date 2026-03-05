@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h2>Panel Analítico</h2>
+
+<div class="stats">
+    <div class="stat-box">
+        <h3>Total Evaluaciones</h3>
+        <p>{{ datos.total }}</p>
+    </div>
+
+    <div class="stat-box">
+        <h3>Probabilidad Media</h3>
+        <p>{{ datos.media }} %</p>
+    </div>
+</div>
+
+<canvas id="graficoRiesgo"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const niveles = {{ datos.niveles | tojson | safe }};
+
+// ----- gráfico riesgo -----
+if(niveles.length > 0){
+
+new Chart(document.getElementById('graficoRiesgo'), {
+    type: 'pie',
+    data: {
+        labels: niveles.map(x => x[0]),
+        datasets: [{
+            data: niveles.map(x => x[1]),
+            backgroundColor: ['#74b404','#876784','#aa044c']
+        }]
+    }
+});
+
+}
+
+});
+
+</script>
+
+{% endblock %}

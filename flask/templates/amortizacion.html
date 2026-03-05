@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}Amortización{% endblock %}
+
+{% block content %}
+
+<div class="card-form">
+
+<h2>Calculadora de Amortización</h2>
+
+<form action="/calcular_amortizacion" method="post">
+
+<div class="form-grid">
+
+<div>
+<label>Capital (€)</label>
+<input type="number" name="capital" required>
+</div>
+
+<div>
+<label>Interés anual (%)</label>
+<input type="number" step="0.01" name="interes" required>
+</div>
+
+<div>
+<label>Duración (meses)</label>
+<input type="number" name="meses" required>
+</div>
+
+<div>
+<label>Sistema</label>
+<select name="sistema">
+<option value="frances">Francés</option>
+<option value="aleman">Alemán</option>
+</select>
+</div>
+
+</div>
+
+<button class="btn-principal">Calcular</button>
+
+</form>
+
+</div>
+
+{% endblock %}

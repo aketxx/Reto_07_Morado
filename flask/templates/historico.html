@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Histórico{% endblock %}
+
+{% block content %}
+
+<h2>Histórico de Evaluaciones</h2>
+
+<table class="tabla">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Edad</th>
+            <th>Ingreso</th>
+            <th>Probabilidad</th>
+            <th>Nivel</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fila in datos %}
+        <tr>
+            <td>{{fila[0]}}</td>
+            <td>{{fila[1]}}</td>
+            <td>{{fila[2]}}</td>
+            <td>{{(fila[6]*100)|round(2)}}%</td>
+            <td>{{fila[7]}}</td>
+            <td>{{fila[8]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
