@@ -109,5 +109,5 @@ dependencies:
       - flask-login
       - gunicorn
       - kneed
-      - python-kaleido
+      - kaleido
       - joblib
