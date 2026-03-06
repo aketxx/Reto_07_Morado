@@ -102,6 +102,7 @@ dependencies:
   - scikit-learn
   - plotly
   - openpyxl
+  - nbformat
 
   # Librerías que se instalarán vía pip
   - pip:
