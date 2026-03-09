@@ -13,6 +13,7 @@ Reto_07_Morado
 │   │   matematicas.ipynb
 │   │   objetivo3_final.ipynb
 │   │   Visualizacion.ipynb
+|   |   objetivo4.ipynb
 │   │
 │   ├───graficos
 │   └───Graficos_Informe
